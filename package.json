@@ -10,7 +10,6 @@
     ],
     "author": "Corey Brochu <corey.brochu@tbxi.com>",
     "dependencies": {
-        "util": "^1.0.0",
         "log4js": "^4.5.1"
     },
     "main": "index",
