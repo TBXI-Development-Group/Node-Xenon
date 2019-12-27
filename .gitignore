@@ -1,3 +1,6 @@
+# Custom for Visual Studio Code
+.vs
+
 # Logs
 logs
 *.log
