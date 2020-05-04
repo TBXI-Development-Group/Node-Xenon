@@ -109,7 +109,10 @@ function valueIsPromise(val) {
 }
 
 function deepCopy(obj) {
-
+  
+  // Guard against a nullish value
+  if (obj == undefined || obj == null) obj = {};
+  
   return JSON.parse(JSON.stringify(obj))
 }
 
