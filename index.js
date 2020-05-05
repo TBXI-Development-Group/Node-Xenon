@@ -298,7 +298,6 @@ function poll(testFunction, timeout, opts) {
    */
   
   let {
-    timeout,
     onDone,
     onTimeout,
     interval
@@ -334,7 +333,7 @@ function poll(testFunction, timeout, opts) {
   }
   
   /** Apply a timeout limitation if specified, for the promise we create (not for the syncing object) */
-  if (valueIsDefined(timeout)) {
+  if (valueIsDefined(timeout) && (timeout >= 0)) {
 
     setTimeout(() => {
 
