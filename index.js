@@ -39,6 +39,7 @@ const MODULE = module.exports = {
   waitFor: waitFor,
   pause: pause,
   awaitCallback: awaitCallback,
+  poll: poll,
 
   setupLogs: logSetup,
   log: logDebugMessage,
