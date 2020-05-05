@@ -291,6 +291,98 @@ function pause(timeout, resumeTrigger) {
   return timer
 }
 
+function poll(testFunction, timeout, opts) {
+  /**
+   * Run a test function every 150ms by default, and finish a promise
+   * once the function returns a truthy value.
+   */
+  
+  let {
+    timeout,
+    onDone,
+    onTimeout,
+    interval
+  } = opts || {};
+
+  let synchronizer = {
+    done: false,
+    value: null,
+    error: null
+  }
+  
+  let res; let rej;
+  isResolved = false;
+  
+  let timer = new Promise((resolve, reject) => {
+
+    res = resolve;
+    rej = reject;
+  })
+  
+  // Guard against non-function objects, and return value immediately
+  if (!valueIsFunction(testFunction)) {
+
+    console.log('TBXTools.js: poll(): polling test argument is not a function.')
+
+    synchronizer.done = true;
+    synchronizer.value = testFunction;
+    synchronizer.error = "NON_FUNCTION"
+    
+    rej(); // Invalidate the promise
+
+    return timer;
+  }
+  
+  /** Apply a timeout limitation if specified, for the promise we create (not for the syncing object) */
+  if (valueIsDefined(timeout)) {
+
+    setTimeout(() => {
+
+      if (synchronizer.done != true && !isResolved) {
+         
+        synchronizer.error = "TIMED_OUT"
+        synchronizer.done = true
+        
+        if (valueIsFunction(onTimeout)) onTimeout(synchronizer)
+      }
+
+      if (!isResolved) res();
+
+    }, timeout)
+  }
+
+  /** Always check periodically to see if we have any change in synchronizer status */ // TODO: Rework this into an integrated runtime
+  let intID = setInterval(() => {
+
+    if (synchronizer.done || valueIsDefined(synchronizer.error)) {
+
+      clearInterval(intID)
+
+      isResolved = true;
+      if (valueIsFunction(onDone)) onDone(synchronizer)
+
+      res();
+    } else { // Run test Function
+      
+      if (testFunction && (testFunction() == true)) {
+       
+        // Resolve the timer as we have now succeeded polling.
+        
+        synchronizer.done = true
+        
+        clearInterval(intID)
+
+        isResolved = true;
+        if (valueIsFunction(onDone)) onDone(synchronizer)
+
+        res();
+      }
+    }
+  }, interval || 150)
+  
+  return timer;
+}
+
 function awaitCallback(callback, timeout, opts) {
 
   if (valueIsFunction(callback) && !valueIsPromise(callback)) {
