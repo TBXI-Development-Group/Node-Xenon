@@ -460,7 +460,7 @@ function logDebugMessage(logInfo, selector, mode) {
    */
 
   let loggers = [];
-  let categories = (selector || '').split('|');
+  let categories = (selector || 'default').split('|');
 
   for (category of categories){
 
