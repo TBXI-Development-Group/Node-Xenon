@@ -32,9 +32,7 @@ const MODULE = module.exports = {
   deepCopy: deepCopy,
   echo: echo,
 
-  syncer: {
-    new: syncer,
-  },
+  syncer: syncer,
   sync: sync,
   waitFor: waitFor,
   pause: pause,
