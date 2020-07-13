@@ -250,7 +250,7 @@ function waitFor(synchronizer, timeout, opts) {
       isResolved = true;
       if (valueIsFunction(onDone)) onDone(synchronizer)
 
-      res();
+      res(synchronizer.value);
     }
   }, interval || 150)
 
@@ -373,7 +373,7 @@ function poll(testFunction, timeout, opts) {
         isResolved = true;
         if (valueIsFunction(onDone)) onDone(synchronizer)
 
-        res();
+        res(synchronizer.value);
       }
     }
   }, interval || 150)
