@@ -1,10 +1,10 @@
 /**
  * File: core/tbxi-tools.js
  * 
- * Last Modified: 5/5/2020
+ * Last Modified: 7/13/2020
  *
- * Version: 1.0
- * Revision: R-000002
+ * Version: 1.1
+ * Revision: R-000001
  * 
  * Author: TBXI - Corey Brochu
  * 
